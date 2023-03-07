@@ -7,34 +7,31 @@ class StarwarsRandCharacter extends React.Component {
         super();
 
         this.state = {
+            image: '',
             name: '',
             height: '',
-            mass: '',
-            hair_color: '',
-            skin_color: '',
-            eye_color: ''
+            mass: ''
         }
 
         this.getCharacter = this.getCharacter.bind(this);
     }
 
     getCharacter() {
-        const peopleURL = 'https://swapi.dev/api/people/';
-        const sw_people_max = 83;
+        const peopleURL = 'https://raw.githubusercontent.com/akabab/starwars-api/master/api/id/';
+        const sw_people_max = 88;
         const random_sw_char_num = (Math.floor(Math.random() * sw_people_max)) + 1
 
-        const getURL = peopleURL + random_sw_char_num;
+        const getURL = peopleURL + random_sw_char_num + '.json';
 
         fetch(getURL)
             .then(response => response.json())
             .then(data => {
+                console.log(data.id);
                 this.setState({
+                    image: data.image,
                     name: data.name,
                     height: data.height,
-                    mass: data.mass,
-                    hair_color: data.hair_color,
-                    skin_color: data.skin_color,
-                    eye_color: data.eye_color
+                    mass: data.mass
                 });
             });
     }
@@ -42,18 +39,15 @@ class StarwarsRandCharacter extends React.Component {
     render() {
         return (
             <div>
-                {
-                    this.state.name !== '' && 
-                        <div>
-                        <h1>Name: {this.state.name}</h1>
-                        <h2>Height: {this.state.height}</h2>
-                        <h2>Mass: {this.state.mass}</h2>
-                        <h2>Hair Color: {this.state.hair_color}</h2>
-                        <h2>Skin Color: {this.state.skin_color}</h2>
-                        <h2>Eyes Color {this.state.eye_color}</h2>
-                        </div>
-                }
-                <button onClick={this.getCharacter}>Show a Random SW Character</button>
+            {   this.state.name &&
+                <div>
+                { this.state.name && <h1>Name: {this.state.name}</h1> }
+                    <img height="500vh" src={this.state.image} alt="" />
+                    { <h2>Height: {this.state.height || "Unknown"}</h2> }
+                    <h2>Mass: {this.state.mass || "Unknown"}</h2>
+                </div>
+            }
+            <button onClick={this.getCharacter}>Show a Random Starwars Character</button>
             </div>
         );
     }
