@@ -61,7 +61,7 @@ class StarwarsRandCharacter extends React.Component {
             <div style={{color: "#ccf"}}>
             {   this.state.name &&
                 <div>
-                { this.state.name && <h1>Name: {this.state.name}</h1> }
+                { this.state.name && <h1>{this.state.name}</h1> }
                     <img height="500vh" alt="" src={this.state.image}/>
                     { <h2>Height: {this.state.height || "Unknown"}</h2> }
                     <h2>Mass: {this.state.mass || "Unknown"}</h2>
