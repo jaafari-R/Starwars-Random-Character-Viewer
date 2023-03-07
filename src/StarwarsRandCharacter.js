@@ -62,7 +62,7 @@ class StarwarsRandCharacter extends React.Component {
             {   this.state.name &&
                 <div>
                 { this.state.name && <h1>{this.state.name}</h1> }
-                    <img height="500vh" width="600" alt="" src={this.state.image}/>
+                    <img height="300" width="400" alt="" src={this.state.image}/>
                     { <h2>Height: {this.state.height || "Unknown"}</h2> }
                     <h2>Mass: {this.state.mass || "Unknown"}</h2>
                 </div>
