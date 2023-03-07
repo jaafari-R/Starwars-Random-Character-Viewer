@@ -35,12 +35,10 @@ class StarwarsRandCharacter extends React.Component {
                         this.setState({image: data.image})
                     }
                     else {
-                        console.log(imgExists, "WTF")
                         this.setState({image: this.IMG_404})
                     }
                 });
 
-                console.log(data.id, data.image);
                 this.setState({
                     name: data.name,
                     height: data.height,
@@ -53,11 +51,7 @@ class StarwarsRandCharacter extends React.Component {
         return new Promise((res, rej) => {
             fetch(url)
                 .then((img) => {
-                    console.log(img)
                     res(img.ok);
-                })
-                .catch(() => {
-                    console.log("WTF");
                 })
         });
     }
@@ -68,7 +62,7 @@ class StarwarsRandCharacter extends React.Component {
             {   this.state.name &&
                 <div>
                 { this.state.name && <h1>Name: {this.state.name}</h1> }
-                    <img height="500vh" src={this.state.image}/>
+                    <img height="500vh" alt="" src={this.state.image}/>
                     { <h2>Height: {this.state.height || "Unknown"}</h2> }
                     <h2>Mass: {this.state.mass || "Unknown"}</h2>
                 </div>
