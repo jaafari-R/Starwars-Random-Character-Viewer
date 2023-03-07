@@ -2,6 +2,7 @@ import React from 'react';
 
 class StarwarsRandCharacter extends React.Component {
 
+    IMG_404 = "/dead-end.gif";
 
     constructor() {
         super();
@@ -26,9 +27,21 @@ class StarwarsRandCharacter extends React.Component {
         fetch(getURL)
             .then(response => response.json())
             .then(data => {
-                console.log(data.id);
+                // Add image if its Url is valid, a dead-end gif if not
+                this.imageUrlExists(data.image)
+                .then((imgExists) => {
+                    if(imgExists)
+                    {
+                        this.setState({image: data.image})
+                    }
+                    else {
+                        console.log(imgExists, "WTF")
+                        this.setState({image: this.IMG_404})
+                    }
+                });
+
+                console.log(data.id, data.image);
                 this.setState({
-                    image: data.image,
                     name: data.name,
                     height: data.height,
                     mass: data.mass
@@ -36,18 +49,31 @@ class StarwarsRandCharacter extends React.Component {
             });
     }
 
+    imageUrlExists(url) {
+        return new Promise((res, rej) => {
+            fetch(url)
+                .then((img) => {
+                    console.log(img)
+                    res(img.ok);
+                })
+                .catch(() => {
+                    console.log("WTF");
+                })
+        });
+    }
+
     render() {
         return (
-            <div>
+            <div style={{color: "#ccf"}}>
             {   this.state.name &&
                 <div>
                 { this.state.name && <h1>Name: {this.state.name}</h1> }
-                    <img height="500vh" src={this.state.image} alt="" />
+                    <img height="500vh" src={this.state.image}/>
                     { <h2>Height: {this.state.height || "Unknown"}</h2> }
                     <h2>Mass: {this.state.mass || "Unknown"}</h2>
                 </div>
             }
-            <button onClick={this.getCharacter}>Show a Random Starwars Character</button>
+            <button style={{backgroundColor: '#444', color: "#ccf", fontSize: "4vh"}} onClick={this.getCharacter}>Show a Random Starwars Character</button>
             </div>
         );
     }
