@@ -3,6 +3,7 @@ import React from 'react';
 class StarwarsRandCharacter extends React.Component {
 
     IMG_404 = "/dead-end.gif";
+    IMG_LOADING = "/loading.gif"
 
     constructor() {
         super();
@@ -23,6 +24,9 @@ class StarwarsRandCharacter extends React.Component {
         const random_sw_char_num = (Math.floor(Math.random() * sw_people_max)) + 1
 
         const getURL = peopleURL + random_sw_char_num + '.json';
+
+        // loading gif while image is not received
+        this.setState({image: this.IMG_LOADING})
 
         fetch(getURL)
             .then(response => response.json())
